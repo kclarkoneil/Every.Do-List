@@ -16,6 +16,7 @@
 		A1137A412140561400E634D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1137A3F2140561400E634D8 /* LaunchScreen.storyboard */; };
 		A1137A4C2140561400E634D8 /* Every_Do_CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1137A4B2140561400E634D8 /* Every_Do_CoreDataTests.swift */; };
 		A1137A572140561400E634D8 /* Every_Do_CoreDataUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1137A562140561400E634D8 /* Every_Do_CoreDataUITests.swift */; };
+		A1137A652140B75700E634D8 /* myCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1137A642140B75700E634D8 /* myCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		A1137A522140561400E634D8 /* Every.Do-CoreDataUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Every.Do-CoreDataUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1137A562140561400E634D8 /* Every_Do_CoreDataUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Every_Do_CoreDataUITests.swift; sourceTree = "<group>"; };
 		A1137A582140561400E634D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1137A642140B75700E634D8 /* myCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				A1137A312140561200E634D8 /* AppDelegate.swift */,
 				A1137A362140561200E634D8 /* MasterViewController.swift */,
+				A1137A642140B75700E634D8 /* myCell.swift */,
 				A1137A382140561200E634D8 /* DetailViewController.swift */,
 				A1137A3A2140561200E634D8 /* Main.storyboard */,
 				A1137A3D2140561400E634D8 /* Assets.xcassets */,
@@ -264,6 +267,7 @@
 			files = (
 				A1137A322140561200E634D8 /* AppDelegate.swift in Sources */,
 				A1137A352140561200E634D8 /* Every_Do_CoreData.xcdatamodeld in Sources */,
+				A1137A652140B75700E634D8 /* myCell.swift in Sources */,
 				A1137A372140561200E634D8 /* MasterViewController.swift in Sources */,
 				A1137A392140561200E634D8 /* DetailViewController.swift in Sources */,
 			);

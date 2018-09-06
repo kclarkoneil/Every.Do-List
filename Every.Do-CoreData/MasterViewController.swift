@@ -40,22 +40,69 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     @objc
     func insertNewObject(_ sender: Any) {
-        let context = self.fetchedResultsController.managedObjectContext
-        let newEvent = Event(context: context)
-             
+        
+        createToDo()
+      
+        
         // If appropriate, configure the new managed object.
-        newEvent.timestamp = Date()
+        //newEvent.timestamp = Date()
 
         // Save the context.
-        do {
-            try context.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
+        
+        
     }
+    func createToDo() {
+        
+        
+        let alertController = UIAlertController(title: "New Todo", message: nil, preferredStyle: .alert)
+
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Title"
+        }
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler: { alert -> Void in
+            let firstTextField = alertController.textFields![0] as UITextField
+            let secondTextField = alertController.textFields![1] as UITextField
+            let thirdTextField = alertController.textFields![2] as UITextField
+            print("Title \(String(describing: firstTextField.text)), Details \(String(describing: secondTextField.text))")
+            let context = self.fetchedResultsController.managedObjectContext
+            let todo = ToDo(context: context)
+            todo.title = firstTextField.text
+            todo.todoDescription = secondTextField.text
+            if let priorityString = thirdTextField.text {
+                if let priorityNumber = Int16(priorityString) {
+                todo.priorityNumber = priorityNumber
+                }
+            }
+
+           // if let myNumber = NumberFormatter().numberFromString(thirdTextField.text)
+              
+            
+                
+            
+            do {
+                try context.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action : UIAlertAction!) -> Void in })
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Description"
+        }
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        
+        
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+        
+        
 
     // MARK: - Segues
 
@@ -110,24 +157,35 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
 
-    func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
-        cell.textLabel!.text = event.timestamp!.description
+    func configureCell(_ cell: UITableViewCell, withEvent event: ToDo) {
+        let myTitleText: String = event.title ?? "Task"
+        let myDetailText: String = event.todoDescription ?? "Description"
+        cell.textLabel!.text = myTitleText
+        cell.detailTextLabel!.text = myDetailText
+        
+        if let priorityLabel:Int16 = event.priorityNumber {
+            let priorityLabelText = "Priority - \(event.priorityNumber)"
+            cell. = priorityLabelText
+        }
+        else
+        
+        
     }
 
     // MARK: - Fetched results controller
 
-    var fetchedResultsController: NSFetchedResultsController<Event> {
+    var fetchedResultsController: NSFetchedResultsController<ToDo> {
         if _fetchedResultsController != nil {
             return _fetchedResultsController!
         }
         
-        let fetchRequest: NSFetchRequest<Event> = Event.fetchRequest()
+        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
         
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
@@ -148,7 +206,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         return _fetchedResultsController!
     }    
-    var _fetchedResultsController: NSFetchedResultsController<Event>? = nil
+    var _fetchedResultsController: NSFetchedResultsController<ToDo>? = nil
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
@@ -172,9 +230,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             case .delete:
                 tableView.deleteRows(at: [indexPath!], with: .fade)
             case .update:
-                configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! Event)
+                configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! ToDo)
             case .move:
-                configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! Event)
+                configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! ToDo)
                 tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }
     }
